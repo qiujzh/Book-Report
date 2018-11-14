@@ -20,3 +20,21 @@
 	2. 线程是进程中独立运行的子任务
 	
 	3. 举例：QQ中的聊天、文件下载是线程
+## 1.2 线程的创建 ##
+线程的创建有两种方式，一是继承Thread类，二是实现Runnable接口；推荐使用第二种方式，因为Java是单继承的，如果已经继承了其他类则无法再继承Thread类。   
+### 继承Thread类 ###
+```java
+public class MyThread extends Thread{
+	public void run(){
+		System.out.println(Thread.currentThread.getName());
+	}
+}
+```
+### 实现Runnable接口 ###
+```java
+public class MyThread implements Runnable{
+	public void run(){
+		System.out.println(Thread.currentThread.getName());
+	}
+}
+```
