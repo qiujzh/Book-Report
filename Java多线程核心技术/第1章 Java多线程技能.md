@@ -72,7 +72,7 @@ public class Main {
 	}
 }
 ```
-main方法运行返回内容如下（其中线程Thread-0与线程B是同一线程）：
+main方法运行返回内容如下：
 ```
 MyThread begin
 ----MyThread--Thread.currentThread().getName()：main
@@ -82,4 +82,26 @@ run begin
 ----run--Thread.currentThread().getName()：A
 ----run--this.getName()：B
 run end
+```
+其中线程Thread-0与线程B是同一线程，对main()方法进行简单修改即可验证此结论：
+```
+public static void main(String[] args){
+		MyThread mt = new MyThread();
+		//mt.setName("B");
+		Thread t = new Thread(mt);
+		t.setName("A");
+		t.start();
+	}
+```
+注释掉mt的命名后，输出结果如下：
+```
+MyThread begin
+----MyThread--Thread.currentThread().getName()：main
+----MyThread--this.getName()：Thread-0
+MyThread end
+run begin
+----run--Thread.currentThread().getName()：A
+----run--this.getName()：Thread-0
+run end
+
 ```
