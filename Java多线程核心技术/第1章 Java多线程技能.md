@@ -90,7 +90,7 @@ run end
 ```java
 	public static void currentThreadDemo(){
 		MyThread mt = new MyThread();
-//		mt.setName("B");
+		//mt.setName("B");
 		Thread t = new Thread(mt);
 		t.setName("A");
 		t.start();
