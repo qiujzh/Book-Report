@@ -109,3 +109,31 @@ run end
 
 ```
 this.getName()返回的是当前类对象所代表的线程（this指代当前对象，所以当前对象所代表的线程就是mt，构造方法时名字为Thread-0，重命名后为B），有点绕，别晕！
+### isAlive() ###
+判断线程是否处于活动状态（活动状态是指线程已经启动且尚未终止，也就是调用start()方法开始到线程终止这段时间所处的状态都是活动状态）。
+创建测试类isAliveDemo
+```java
+public static void isAliveDemo(){
+		IsAliveThread iat = new IsAliveThread();
+		System.out.println("main begin: " + iat.isAlive());
+		iat.start();
+		//Thread.sleep(2000);
+		System.out.println("main end: " + iat.isAlive());
+	}
+```
+Main类中增加测试方法isAliveDemo()
+```java
+public static void isAliveDemo(){
+		IsAliveThread iat = new IsAliveThread();
+		System.out.println("main begin: " + iat.isAlive());
+		iat.start();
+		//Thread.sleep(2000);
+		System.out.println("main end: " + iat.isAlive());
+	}
+```
+在main()方法中调用isAliveDemo()方法，输出结果如下：
+```
+main begin: false
+main end: true
+run: true
+```
