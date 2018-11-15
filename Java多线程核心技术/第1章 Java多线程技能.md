@@ -38,3 +38,48 @@ public class MyThread implements Runnable{
 	}
 }
 ```
+## 1.3 Thread常用方法 ## 
+### currentThread() ###
+返回调用当前代码的线程
+```java
+public class MyThread extends Thread{
+	
+	public MyThread() {
+		System.out.println("MyThread begin");
+		System.out.println("----MyThread--Thread.currentThread().getName()：" + Thread.currentThread().getName());
+		System.out.println("----MyThread--this.getName()：" + this.getName());
+		System.out.println("MyThread end");
+	}
+
+	@Override
+	public void run(){
+		System.out.println("run begin");
+		System.out.println("----run--Thread.currentThread().getName()：" + Thread.currentThread().getName());
+		System.out.println("----run--this.getName()：" + this.getName());
+		System.out.println("run end");
+	}
+}
+}
+
+public class Main {
+
+	public static void main(String[] args){
+		MyThread mt = new MyThread();
+		mt.setName("B");
+		Thread t = new Thread(mt);
+		t.setName("A");
+		t.start();
+	}
+}
+```
+main方法运行返回内容如下（其中线程Thread-0与线程B是同一线程）：
+```
+MyThread begin
+----MyThread--Thread.currentThread().getName()：main
+----MyThread--this.getName()：Thread-0
+MyThread end
+run begin
+----run--Thread.currentThread().getName()：A
+----run--this.getName()：B
+run end
+```
