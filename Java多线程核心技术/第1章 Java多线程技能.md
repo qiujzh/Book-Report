@@ -137,3 +137,7 @@ main begin: false
 main end: true
 run: true
 ```
+### sleep() ###
+让当前正在执行的线程休眠一段时间（暂停执行，线程阻塞），这里正在执行的线程指的是this.currentThread()返回的线程。
+
+
