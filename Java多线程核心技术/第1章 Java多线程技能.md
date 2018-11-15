@@ -64,6 +64,9 @@ public class MyThread extends Thread{
 public class Main {
 
 	public static void main(String[] args){
+		currentThreadDemo();
+	}
+	public static void currentThreadDemo(){
 		MyThread mt = new MyThread();
 		mt.setName("B");
 		Thread t = new Thread(mt);
@@ -83,11 +86,11 @@ run begin
 ----run--this.getName()：B
 run end
 ```
-其中线程Thread-0与线程B是同一线程，对main()方法进行简单修改即可验证此结论：
+其中线程Thread-0与线程B是同一线程，对currentThreadDemo()方法进行简单修改即可验证此结论：
 ```java
-public static void main(String[] args){
+	public static void currentThreadDemo(){
 		MyThread mt = new MyThread();
-		//mt.setName("B");
+//		mt.setName("B");
 		Thread t = new Thread(mt);
 		t.setName("A");
 		t.start();
