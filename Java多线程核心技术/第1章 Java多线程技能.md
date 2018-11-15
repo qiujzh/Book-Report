@@ -84,7 +84,7 @@ run begin
 run end
 ```
 其中线程Thread-0与线程B是同一线程，对main()方法进行简单修改即可验证此结论：
-```
+```java
 public static void main(String[] args){
 		MyThread mt = new MyThread();
 		//mt.setName("B");
@@ -105,3 +105,4 @@ run begin
 run end
 
 ```
+this.getName()返回的是当前类对象所代表的线程（this指代当前对象，所以当前对象所代表的线程就是mt，构造方法时名字为Thread-0，重命名后为B），有点绕，别晕！
