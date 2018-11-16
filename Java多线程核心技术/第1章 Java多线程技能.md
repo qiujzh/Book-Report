@@ -189,3 +189,17 @@ end 1542348504392
 run threadName = Thread-0 begin
 run threadName = Thread-0 end
 ```
+### getId() ###
+返回线程的唯一标识
+Main中增加测试方法 getIdDemo
+```java
+public static void getIdDemo(){
+		Long threadId = Thread.currentThread().getId();
+		String threadName = Thread.currentThread().getName();
+		System.out.println(threadName +": " + threadId);
+	}
+```
+运行main方法，输出结果如下：
+```
+main: 1
+```
