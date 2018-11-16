@@ -139,5 +139,36 @@ run: true
 ```
 ### sleep() ###
 让当前正在执行的线程休眠一段时间（暂停执行，线程阻塞），这里正在执行的线程指的是this.currentThread()返回的线程。
+```java
+public class SleepThread extends Thread {
 
-
+	@Override
+	public void run() {
+		System.out.println("run threadName = " + this.currentThread().getName() + " begin");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("run threadName = " + this.currentThread().getName() + " end");
+	}
+}
+```
+Main中增加测试方法sleepDemo
+```java
+public static void sleepDemo(){
+		SleepThread st = new SleepThread();
+		System.out.println("begin " + System.currentTimeMillis());
+		st.run();
+		//st.start;
+		System.out.println("end " + System.currentTimeMillis());
+	}
+```
+运行main方法，运行结果如下：
+```
+begin 1542348266719
+run threadName = main begin
+run threadName = main end
+end 1542348268721
+```
