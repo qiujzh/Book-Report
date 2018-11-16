@@ -172,3 +172,20 @@ run threadName = main begin
 run threadName = main end
 end 1542348268721
 ```
+修改sleepDemo方法
+```
+public static void sleepDemo(){
+		SleepThread st = new SleepThread();
+		System.out.println("begin " + System.currentTimeMillis());
+		//st.run();
+		st.start();
+		System.out.println("end " + System.currentTimeMillis());
+	}
+```
+运行main方法，运行结果如下：
+```
+begin 1542348504391
+end 1542348504392
+run threadName = Thread-0 begin
+run threadName = Thread-0 end
+```
