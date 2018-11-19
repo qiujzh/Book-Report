@@ -276,7 +276,7 @@ i = 1
 .
 i=499
 ```
-通过测试结果可看出，main方法被中断，但第二次中断状态的判断结果返回的是false，这是因为this.interrupted()方法执行后会将状态标志重置为false的作用，具体原因不清楚，有时间可以研究一下。
+通过测试结果可看出，main方法被中断，但第二次中断状态的判断结果返回的是false，这是由于this.interrupted()方法执行后会将状态标志重置为false的功能造成的，具体原因不清楚，有时间可以研究一下。
 
 this.isInterrupted()示例：
 创建测试类IsInterruptedThread
@@ -314,3 +314,60 @@ i = 2
 .
 i=499
 ```
+main线程被终止，且第二次状态判断返回的是true，说明isInterrupted方法并没有将线程状态重置的功能。
+### 异常终止法 ###
+该方法是通过抛异常的方式来实现线程的终止（若判断状态为true，那么抛出异常来终止线程），直接看例子：
+创建测试类ExceptionInterruptThread
+```java
+public class ExceptionInterruptThread extends Thread {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {
+			for(int i = 0; i < 5000; i++){
+				if(this.interrupted()){
+					System.out.println("线程被终止，抛出异常来结束线程");
+					throw new InterruptedException();
+				}
+				System.out.println("i = " + i);
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println("异常已抛出，线程真的结束了");
+		}
+	}
+	
+}
+```
+Main类中增加测试方法exceptionInterruptDemo()
+```java
+public static void exceptionInterruptDemo(){
+		ExceptionInterruptThread eit = new ExceptionInterruptThread();
+		eit.start();
+		try {
+			eit.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		eit.interrupt();
+		System.out.println("main end");
+	}
+```
+运行main方法，输出结果如下：
+```
+i = 0
+i = 1
+.
+.
+.
+i = 168
+i = 169
+i = 170
+main end
+线程被终止，抛出异常来结束线程
+异常已抛出，线程真的结束了
+```
+通过抛异常的方式来终止线程的方式需要注意try-catch块要覆盖整个run方法，也就是说所有代码都要放在try-catch中，try-catch后面不要出现任何代码，否则还是会执行。
+这种方式的思想是让代码执行到catch代码块中的代码就结束，实际上线程并未被强制终止，而是线程执行完catch块后再也没有其他代码可执行了，所以生命周期结束，线程终止。
