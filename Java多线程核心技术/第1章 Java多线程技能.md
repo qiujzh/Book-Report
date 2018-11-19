@@ -247,4 +247,4 @@ i = 5
 .
 i=499
 ```
-it.interrupt()中断的是it线程，<em>但it.interrupted()方法判断的是调用该行代码的线程，也就是main线程<em>，main方法未被中断，所以两次判断返回的都是。
+it.interrupt()中断的是it线程，**但it.interrupted()方法判断的是调用该行代码的线程，也就是main线程**，main方法未被中断，所以两次判断返回的都是false。
