@@ -211,7 +211,8 @@ main: 1
 ### 判断线程是否是停止状态 ### 
  1）this.interrupted()：测试当前线程是否已经中断，这里的当前线程指的是调用this.interrupted()方法的线程。 
  2）this.isInterrupted()：测试线程是否已经中断，这里的线程指的是this所指代的线程。
-实例： 
+this.interrupted()示例： 
+创建测试类InterruptedThread
 ```java
 public class InterruptedThread extends Thread {
 
@@ -247,4 +248,69 @@ i = 5
 .
 i=499
 ```
-it.interrupt()中断的是it线程，**但it.interrupted()方法判断的是调用该行代码的线程，也就是main线程**，main方法未被中断，所以两次判断返回的都是false。
+it.interrupt()中断的是it线程，**但it.interrupted()方法判断的是调用该行代码的线程，也就是main线程**，main线程未被中断，所以两次判断返回的都是false。
+
+修改测试方法如下，使得main方法被中断：
+```java
+	public static void interruptedDemo(){
+		InterruptedThread it = new InterruptedThread();
+		it.start();
+		//it.interrupt();
+		Thread.currentThread().interrupt();//中断main方法
+		System.out.println(it.interrupted());
+		System.out.println(it.interrupted());
+	}	
+```
+输出结果如下：
+```
+true
+false
+i = 0
+i = 1
+true
+false
+i = 0
+i = 1
+.
+.
+.
+i=499
+```
+通过测试结果可看出，main方法被中断，但第二次中断状态的判断结果返回的是false，这是因为this.interrupted()方法执行后会将状态标志重置为false的作用，具体原因不清楚，有时间可以研究一下。
+
+this.isInterrupted()示例：
+创建测试类IsInterruptedThread
+```java
+public class IsInterruptedThread extends Thread {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < 500; i++){
+			System.out.println("i = " + i);
+		}
+	}
+}
+```
+Main类中增加测试方法isInterruptedDemo()
+```java
+	public static void isInterruptedDemo(){
+		IsInterruptedThread iit = new IsInterruptedThread();
+		iit.start();
+		iit.interrupt();
+		System.out.println(iit.isInterrupted());
+		System.out.println(iit.isInterrupted());
+	}
+```
+运行main方法，输出结果如下：
+```
+true
+true
+i = 0
+i = 1
+i = 2
+.
+.
+.
+i=499
+```
