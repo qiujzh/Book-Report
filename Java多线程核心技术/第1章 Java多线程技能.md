@@ -203,8 +203,48 @@ public static void getIdDemo(){
 ```
 main: 1
 ```
-## 停止线程 ##
-停止线程有三种方式：
- 1）run方法完成后线程终止，正常退出。
- 2）使用stop方法强制终止，不建议使用，可能会造成不也预料的结果。
- 3）使用interrupt方法中断线程，建议使用这种方式停止线程。
+## 停止线程 ## 
+停止线程有三种方式： 
+ 	1）run方法完成后线程终止，正常退出。 
+ 	2）使用stop方法强制终止，不建议使用，可能会造成不也预料的结果。 
+ 	3）使用interrupt方法中断线程，建议使用这种方式停止线程。 
+### 判断线程是否是停止状态 ### 
+ 1）this.interrupted()：测试当前线程是否已经中断，这里的当前线程指的是调用this.interrupted()方法的线程。 
+ 2）this.isInterrupted()：测试线程是否已经中断，这里的线程指的是this所指代的线程。
+实例： 
+```java
+public class InterruptedThread extends Thread {
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		for(int i = 0; i < 500; i++){
+			System.out.println("i = " + i);
+		}
+```
+Main类中增加测试方法interruptedDemo()：
+```java
+	public static void interruptedDemo(){
+		InterruptedThread it = new InterruptedThread();
+		it.start();
+		it.interrupt();
+		System.out.println(it.interrupted());
+		System.out.println(it.interrupted());
+	}
+```
+运行main方法，输出结果如下：
+```
+false
+false
+i = 0
+i = 1
+i = 2
+i = 3
+i = 4
+i = 5
+.
+.
+.
+i=499
+```
+it.interrupt()中断的是it线程，<font color=red>但it.interrupted()方法判断的是调用该行代码的线程，也就是main线程</font>。
