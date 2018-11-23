@@ -376,5 +376,9 @@ main end
 ### 在沉睡中（sleep过程中）停止 ###
 首先看一下sleep方法的声明
 ![](./images/sleep.jpg)
-方法声明中抛出了InterruptedException异常，也就是说如果有线程中断了当前线程，那么就会抛出异常，而且线程的中断状态会被清除（即调用interrupted方法会返回false）。
+方法声明中抛出了InterruptedException异常，也就是说如果有线程中断了当前线程，那么就会抛出异常，而且线程的中断状态会被清除（即调用interrupted方法会返回false）。  
+
+举例1
+
+
 
