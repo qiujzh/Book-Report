@@ -113,13 +113,12 @@ this.getName()返回的是当前类对象所代表的线程（this指代当前�
 判断线程是否处于活动状态（活动状态是指线程已经启动且尚未终止，也就是调用start()方法开始到线程终止这段时间所处的状态都是活动状态）。
 创建测试类isAliveDemo
 ```java
-public static void isAliveDemo(){
-		IsAliveThread iat = new IsAliveThread();
-		System.out.println("main begin: " + iat.isAlive());
-		iat.start();
-		//Thread.sleep(2000);
-		System.out.println("main end: " + iat.isAlive());
+public class IsAliveThread extends Thread {
+	@Override
+	public void run(){
+		System.out.println("run: " + this.isAlive());
 	}
+}
 ```
 Main类中增加测试方法isAliveDemo()
 ```java
